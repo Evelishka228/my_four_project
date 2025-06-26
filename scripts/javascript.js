@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
       additionalText: [
         "RELIABLE TECHNOLOGICAL",
         "INNOVATIVE CREATIVE",
-        "LARGE-SCALE SAFE",
+        "SCALED CONFIDENTIAL",
       ],
       button: "RUS",
       logo: "VISOTKI",
@@ -132,18 +132,24 @@ document.addEventListener("DOMContentLoaded", function () {
     handleScrollAnimation();
   });
 
+  // Анимация прелоадера
   async function animateLoader() {
     let currentStage = 0;
 
     function showNextStage() {
       if (currentStage >= translations[currentLanguage].stages.length) {
+        // Финальное состояние
         preloader.classList.add("final-state");
         document.body.classList.add("dark-background");
+
+        // Показываем первый экран
         firstScreen.style.display = "flex";
 
+        // Задержка перед скрытием прелоадера
         setTimeout(() => {
           preloader.style.display = "none";
         }, 1000);
+
         return;
       }
 
@@ -159,9 +165,6 @@ document.addEventListener("DOMContentLoaded", function () {
           const wordSpan = document.createElement("span");
           wordSpan.className = "word";
           wordSpan.textContent = translations[currentLanguage].stages[i].text;
-          if (i > 0) {
-            wordSpan.style.marginLeft = "20px"; // Фиксируем расстояние между словами
-          }
           textElement.appendChild(wordSpan);
         }
         textElement.style.opacity = "1";

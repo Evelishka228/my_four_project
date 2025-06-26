@@ -66,8 +66,11 @@ body.dark-background {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transition: opacity 0.3s ease;
 }
-
+.final-bee:hover {
+  opacity: 0;
+}
 .final-text-container {
   display: flex;
   justify-content: center;
@@ -79,7 +82,6 @@ body.dark-background {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-/* Финальный текст на первом экране */
 .final-text {
   font-size: clamp(60px, 15vw, 205px);
   font-family: "BebasNeueBold", sans-serif;
@@ -88,8 +90,7 @@ body.dark-background {
   paint-order: stroke;
   text-align: center;
   line-height: 1;
-  word-spacing: 20px; /* Теперь используем word-spacing вместо letter-spacing */
-  white-space: nowrap; /* Запрещаем переносы */
+  /* Убрал margin-top */
 }
 
 /* Второй экран */
@@ -142,6 +143,7 @@ body.dark-background {
   transition: background-color 0.3s ease;
 }
 
+/* Анимированный текст */
 /* Анимированный текст в прелоадере */
 .text-container {
   position: absolute;
@@ -153,13 +155,14 @@ body.dark-background {
   color: transparent;
   font-family: "BebasNeueBold", sans-serif;
   z-index: 1;
-  gap: 20px; /* Возвращаем исходное расстояние */
+  gap: 32px; /* Фиксированный отступ вместо 20px */
   flex-wrap: wrap;
   text-align: center;
   -webkit-text-stroke: 1.2px #000;
   paint-order: stroke;
   padding: 20px;
   transition: -webkit-text-stroke 0.3s ease, color 0.3s ease;
+  white-space: nowrap; /* Добавим чтобы текст не переносился */
 }
 
 .preloader.final-state .text-container {
