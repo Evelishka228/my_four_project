@@ -1,0 +1,283 @@
+/* Базовые стили */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #000;
+  overflow-x: hidden;
+  color: #fff;
+  transition: background-color 0.3s ease;
+  margin: 0;
+  padding: 0;
+}
+
+body.dark-background {
+  background-color: #000;
+}
+
+/* Основной контент */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Стили для экранов */
+.screen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Первый экран (финальное состояние прелоадера) */
+.first-screen {
+  display: none; /* Сначала скрыт, показывается после прелоадера */
+}
+
+.final-content-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.final-bee-container {
+  width: 826px;
+  height: 826px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.final-bee {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.final-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+/* Финальный текст на первом экране */
+.final-text {
+  font-size: clamp(60px, 15vw, 205px);
+  font-family: "BebasNeueBold", sans-serif;
+  color: transparent;
+  -webkit-text-stroke: 1.2px #fff;
+  paint-order: stroke;
+  text-align: center;
+  line-height: 1;
+  word-spacing: 20px; /* Теперь используем word-spacing вместо letter-spacing */
+  white-space: nowrap; /* Запрещаем переносы */
+}
+
+/* Второй экран */
+.second-screen {
+  background-color: #000;
+}
+
+.text-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.text-line {
+  font-size: clamp(70px, 15vw, 150px);
+  color: #fff;
+  font-family: "BebasNeueBold", sans-serif;
+  text-align: center;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.text-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Прелоадер */
+.preloader {
+  width: 100%;
+  height: 100vh;
+  background-color: #fff700;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.5s ease 0.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.preloader.final-state {
+  background-color: #000;
+  transition: background-color 0.3s ease;
+}
+
+/* Анимированный текст в прелоадере */
+.text-container {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(60px, 15vw, 205px);
+  color: transparent;
+  font-family: "BebasNeueBold", sans-serif;
+  z-index: 1;
+  gap: 20px; /* Возвращаем исходное расстояние */
+  flex-wrap: wrap;
+  text-align: center;
+  -webkit-text-stroke: 1.2px #000;
+  paint-order: stroke;
+  padding: 20px;
+  transition: -webkit-text-stroke 0.3s ease, color 0.3s ease;
+}
+
+.preloader.final-state .text-container {
+  -webkit-text-stroke: 1.2px #fff;
+}
+
+/* Пчела */
+.bee-container {
+  width: 826px;
+  height: 826px;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bee-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Шапка */
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 25px 0;
+  z-index: 9998;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: clamp(24px, 5vw, 36px);
+  letter-spacing: 2px;
+  margin-left: 20px;
+}
+
+.main-header .logo,
+.main-header .nav-link {
+  font-family: "BebasNeueRegular", sans-serif;
+  color: white;
+}
+
+.main-nav {
+  display: flex;
+  gap: clamp(15px, 3vw, 40px);
+  margin-right: 20px;
+}
+
+.nav-link {
+  font-size: clamp(16px, 3vw, 28px);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 5px;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  opacity: 0.8;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Кнопка языка */
+.lang-switcher {
+  position: fixed;
+  bottom: 13px;
+  right: 13px;
+  z-index: 10000;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.lang-switcher button {
+  font-family: "BebasNeueRegular", sans-serif;
+  font-weight: 400;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 8px 20px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.lang-switcher button:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+/* Анимации появления */
+.preloader.final-state ~ .main-header,
+.preloader.final-state ~ .lang-switcher {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.9s;
+}

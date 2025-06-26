@@ -1,0 +1,30 @@
+/* Подключаем Bebas Neue Regular */
+@font-face {
+  font-family: "BebasNeueRegular";
+  src: url("../fonts/BebasNeue-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* Подключаем Bebas Neue Book */
+@font-face {
+  font-family: "BebasNeueBook";
+  src: url("../fonts/BebasNeue-Book.otf") format("opentype");
+  font-weight: 350;
+  font-style: normal;
+  font-display: swap; /* Для лучшей производительности */
+}
+
+@font-face {
+  font-family: "BebasNeue";
+  src: url("../fonts/BebasNeue-Bold.otf") format("opentype");
+  font-weight: 700; /* Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter-Regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: normal;
+}
