@@ -37,7 +37,8 @@ body.dark-background {
 
 /* Первый экран (финальное состояние прелоадера) */
 .first-screen {
-  display: none; /* Сначала скрыт, показывается после прелоадера */
+  display: none;
+  margin-bottom: 100px;
 }
 
 .final-content-wrapper {
@@ -62,15 +63,18 @@ body.dark-background {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .final-bee {
   width: 100%;
   height: 100%;
   object-fit: contain;
   transition: opacity 0.3s ease;
 }
+
 .final-bee:hover {
   opacity: 0;
 }
+
 .final-text-container {
   display: flex;
   justify-content: center;
@@ -82,6 +86,7 @@ body.dark-background {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .final-text {
   font-size: clamp(60px, 15vw, 205px);
   font-family: "BebasNeueBold", sans-serif;
@@ -90,38 +95,93 @@ body.dark-background {
   paint-order: stroke;
   text-align: center;
   line-height: 1;
-  /* Убрал margin-top */
 }
 
 /* Второй экран */
 .second-screen {
   background-color: #000;
+  overflow: hidden;
+  padding: 50px 0;
+  contain: strict;
 }
 
 .text-block {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 40px;
+  width: 100%;
+  overflow: hidden;
 }
 
 .text-line {
-  font-size: clamp(70px, 15vw, 150px);
-  color: #fff;
+  animation-play-state: running;
+  font-size: clamp(90px, 18vw, 180px);
   font-family: "BebasNeueBold", sans-serif;
   text-align: center;
-  line-height: 1;
   white-space: nowrap;
+  position: relative;
+  display: flex;
+  will-change: transform;
+  padding: 0 100px;
+  line-height: 1.1;
+  backface-visibility: hidden;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition: opacity 0.5s ease;
 }
 
-.text-line.visible {
+body.loaded .text-line {
   opacity: 1;
-  transform: translateY(0);
 }
 
+.text-line:nth-child(1) {
+  animation: moveRight 50s linear infinite;
+}
+
+.text-line:nth-child(2) {
+  animation: moveLeft 50s linear infinite;
+}
+
+.text-line:nth-child(3) {
+  animation: moveRight 50s linear infinite;
+}
+
+@keyframes moveRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes moveLeft {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.text-line span {
+  display: inline-block;
+  margin: 0 40px;
+  color: #fff;
+  -webkit-text-stroke: 1.2px transparent;
+  paint-order: stroke;
+  transition: all 0.3s ease;
+  position: relative;
+  top: 0.1em;
+  cursor: default;
+}
+
+.text-line span:hover {
+  color: transparent;
+  -webkit-text-stroke: 1.2px #fff;
+}
+
+/* Остальные стили остаются без изменений */
 /* Прелоадер */
 .preloader {
   width: 100%;
@@ -143,8 +203,6 @@ body.dark-background {
   transition: background-color 0.3s ease;
 }
 
-/* Анимированный текст */
-/* Анимированный текст в прелоадере */
 .text-container {
   position: absolute;
   width: 100%;
@@ -155,21 +213,20 @@ body.dark-background {
   color: transparent;
   font-family: "BebasNeueBold", sans-serif;
   z-index: 1;
-  gap: 32px; /* Фиксированный отступ вместо 20px */
+  gap: 32px;
   flex-wrap: wrap;
   text-align: center;
   -webkit-text-stroke: 1.2px #000;
   paint-order: stroke;
   padding: 20px;
   transition: -webkit-text-stroke 0.3s ease, color 0.3s ease;
-  white-space: nowrap; /* Добавим чтобы текст не переносился */
+  white-space: nowrap;
 }
 
 .preloader.final-state .text-container {
   -webkit-text-stroke: 1.2px #fff;
 }
 
-/* Пчела */
 .bee-container {
   width: 826px;
   height: 826px;
@@ -185,7 +242,6 @@ body.dark-background {
   object-fit: contain;
 }
 
-/* Шапка */
 .main-header {
   position: fixed;
   top: 0;
@@ -247,7 +303,6 @@ body.dark-background {
   width: 100%;
 }
 
-/* Кнопка языка */
 .lang-switcher {
   position: fixed;
   bottom: 13px;
@@ -277,10 +332,29 @@ body.dark-background {
   transform: scale(1.05);
 }
 
-/* Анимации появления */
 .preloader.final-state ~ .main-header,
 .preloader.final-state ~ .lang-switcher {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 0.9s;
+}
+/* Стили для изображения при наведении */
+.hover-image-container {
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  /* Убрано width: 500px; */
+}
+.hover-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: -20px; /* Поднимаем изображение */
+  height: 100%;
+  width: auto;
+  max-width: none;
+  pointer-events: none; /* Чтобы не перехватывало клики */
 }

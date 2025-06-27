@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Тексты на разных языках
   const translations = {
     rus: {
       stages: [
@@ -17,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
       about: "О НАС",
       events: "СОБЫТИЯ",
       merch: "МЕРЧ",
-      faq: "ВОПРОСЫ",
+      faq: "КОНТАКТЫ",
     },
     eng: {
       stages: [
@@ -35,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
       about: "ABOUT US",
       events: "EVENTS",
       merch: "MERCH",
-      faq: "FAQ",
+      faq: "CONTACTS",
     },
   };
 
@@ -48,21 +47,21 @@ document.addEventListener("DOMContentLoaded", function () {
   const finalBee = document.querySelector(".final-bee");
   const finalText = document.querySelector(".final-text");
   const textLines = document.querySelectorAll(".text-line");
+  const hoverImage1 = document.getElementById("hoverImage1");
+  const hoverImage2 = document.getElementById("hoverImage2");
+  const hoverImage3 = document.getElementById("hoverImage3");
+  const hoverImage4 = document.getElementById("hoverImage4");
 
-  // Функция для обновления контента на странице
   function updatePageContent() {
-    // Обновляем кнопку переключения
     if (languageToggle) {
       languageToggle.textContent = translations[currentLanguage].button;
     }
 
-    // Обновляем текст в шапке
     const logoElement = document.querySelector(".logo");
     if (logoElement) {
       logoElement.textContent = translations[currentLanguage].logo;
     }
 
-    // Обновляем навигационные ссылки
     document.querySelectorAll("[data-i18n]").forEach((el) => {
       const key = el.getAttribute("data-i18n");
       if (translations[currentLanguage][key]) {
@@ -70,38 +69,102 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    // Обновляем основной текст на первом экране
     if (finalText) {
       finalText.textContent = translations[currentLanguage].stages
         .map((stage) => stage.text)
         .join(" ");
     }
 
-    // Обновляем изображение пчелы
     if (finalBee) {
       finalBee.src = translations[currentLanguage].stages[2].image;
     }
 
-    // Обновляем три строки текста
     translations[currentLanguage].additionalText.forEach((text, index) => {
       if (textLines[index]) {
-        textLines[index].textContent = text;
+        const words = text.split(" ");
+        const duplicatedWords = [];
+        for (let i = 0; i < 10; i++) {
+          duplicatedWords.push(...words);
+        }
+
+        textLines[index].innerHTML = duplicatedWords
+          .map((word) => `<span data-word="${word}">${word}</span>`)
+          .join("");
+
+        const spans = textLines[index].querySelectorAll("span");
+        spans.forEach((span) => {
+          span.style.margin = "0 40px";
+          span.style.position = "relative";
+          span.style.top = "0.1em";
+
+          span.addEventListener("mouseenter", (e) => {
+            const word = span.dataset.word;
+            const rect = span.getBoundingClientRect();
+            let hoverImage = null;
+
+            // Определяем какое изображение показывать
+            if (word === "МАСШТАБНО" || word === "SCALED")
+              hoverImage = hoverImage1;
+            else if (word === "КРЕАТИВНО" || word === "CREATIVE")
+              hoverImage = hoverImage2;
+            else if (word === "ТЕХНОЛОГИЧНО" || word === "TECHNOLOGICAL")
+              hoverImage = hoverImage3;
+            else if (word === "ИННОВАЦИОННО" || word === "INNOVATIVE")
+              hoverImage = hoverImage4;
+
+            if (hoverImage) {
+              const container = hoverImage.parentElement;
+              container.style.left = `${rect.left}px`;
+              container.style.top = `${rect.top}px`;
+              container.style.width = `${rect.width}px`;
+              container.style.height = `${rect.height}px`;
+              container.style.opacity = "1";
+              container.style.zIndex = "-1";
+
+              // Центрируем изображение
+              hoverImage.style.left = "50%";
+              hoverImage.style.top = "50%";
+              hoverImage.style.transform = "translate(-50%, -50%)";
+            }
+
+            // Пауза анимации только для текущей строки
+            e.target.closest(".text-line").style.animationPlayState = "paused";
+            span.style.color = "transparent";
+            span.style.webkitTextStroke = "1.2px #fff";
+          });
+
+          span.addEventListener("mouseleave", () => {
+            document
+              .querySelectorAll(".hover-image-container")
+              .forEach((container) => {
+                container.style.opacity = "0";
+              });
+            textLines[index].style.animationPlayState = "running";
+            span.style.color = "";
+            span.style.webkitTextStroke = "";
+          });
+        });
       }
     });
+
+    setTimeout(() => {
+      document.querySelectorAll(".text-line").forEach((line, i) => {
+        line.style.animation = `${
+          i % 2 === 0 ? "moveRight" : "moveLeft"
+        } 50s linear infinite`;
+      });
+    }, 50);
   }
 
-  // Функция для переключения языка
   function toggleLanguage() {
     currentLanguage = currentLanguage === "rus" ? "eng" : "rus";
     updatePageContent();
   }
 
-  // Обработчик клика на кнопку
   if (languageToggle) {
     languageToggle.addEventListener("click", toggleLanguage);
   }
 
-  // Анимация появления текста при скролле
   function handleScrollAnimation() {
     const triggerPoint = window.innerHeight / 1.2;
 
@@ -116,36 +179,28 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Инициализация при загрузке
   window.addEventListener("load", () => {
-    // Показываем header и кнопку языка после прелоадера
+    document.body.classList.add("loaded");
+
     setTimeout(() => {
       document.querySelector(".main-header").style.display = "flex";
       document.querySelector(".lang-switcher").style.display = "block";
     }, 1000);
 
-    // Инициализация текста
     updatePageContent();
-
-    // Инициализация скролл-анимации
     window.addEventListener("scroll", handleScrollAnimation);
     handleScrollAnimation();
   });
 
-  // Анимация прелоадера
   async function animateLoader() {
     let currentStage = 0;
 
     function showNextStage() {
       if (currentStage >= translations[currentLanguage].stages.length) {
-        // Финальное состояние
         preloader.classList.add("final-state");
         document.body.classList.add("dark-background");
-
-        // Показываем первый экран
         firstScreen.style.display = "flex";
 
-        // Задержка перед скрытием прелоадера
         setTimeout(() => {
           preloader.style.display = "none";
         }, 1000);
@@ -177,6 +232,5 @@ document.addEventListener("DOMContentLoaded", function () {
     showNextStage();
   }
 
-  // Запускаем анимацию после полной загрузки страницы
   setTimeout(animateLoader, 300);
 });
