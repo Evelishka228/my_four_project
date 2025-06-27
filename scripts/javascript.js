@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
       events: "СОБЫТИЯ",
       merch: "МЕРЧ",
       faq: "КОНТАКТЫ",
+      eventsTitle: "СОБЫТИЯ",
     },
     eng: {
       stages: [
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
       events: "EVENTS",
       merch: "MERCH",
       faq: "CONTACTS",
+      eventsTitle: "EVENTS",
     },
   };
 
@@ -51,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const hoverImage2 = document.getElementById("hoverImage2");
   const hoverImage3 = document.getElementById("hoverImage3");
   const hoverImage4 = document.getElementById("hoverImage4");
+  const eventsLink = document.querySelector('.nav-link[data-i18n="events"]');
 
   function updatePageContent() {
     if (languageToggle) {
@@ -77,6 +80,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (finalBee) {
       finalBee.src = translations[currentLanguage].stages[2].image;
+    }
+
+    // Обновляем заголовок событий, если он есть на странице
+    const eventsTitle = document.querySelector('[data-i18n="eventsTitle"]');
+    if (eventsTitle) {
+      eventsTitle.textContent = translations[currentLanguage].eventsTitle;
     }
 
     translations[currentLanguage].additionalText.forEach((text, index) => {
@@ -156,6 +165,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 50);
   }
 
+  // Обработчик для перехода на страницу событий
+  if (eventsLink) {
+    eventsLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.location.href = "events.html";
+    });
+  }
+
   function toggleLanguage() {
     currentLanguage = currentLanguage === "rus" ? "eng" : "rus";
     updatePageContent();
@@ -182,10 +199,22 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("load", () => {
     document.body.classList.add("loaded");
 
-    setTimeout(() => {
-      document.querySelector(".main-header").style.display = "flex";
-      document.querySelector(".lang-switcher").style.display = "block";
-    }, 1000);
+    const preloader = document.querySelector(".preloader");
+
+    if (preloader) {
+      // Если прелоадер есть (главная страница)
+      setTimeout(() => {
+        document.querySelector(".main-header").style.display = "flex";
+        document.querySelector(".lang-switcher").style.display = "block";
+      }, 1000);
+    } else {
+      // Если прелоадера нет (страница событий)
+      document.querySelector(".main-header").style.opacity = "1";
+      document.querySelector(".main-header").style.transform = "translateY(0)";
+      document.querySelector(".lang-switcher").style.opacity = "1";
+      document.querySelector(".lang-switcher").style.transform =
+        "translateY(0)";
+    }
 
     updatePageContent();
     window.addEventListener("scroll", handleScrollAnimation);
@@ -232,5 +261,8 @@ document.addEventListener("DOMContentLoaded", function () {
     showNextStage();
   }
 
-  setTimeout(animateLoader, 300);
+  // Запускаем анимацию прелоадера только если он есть на странице
+  if (preloader) {
+    setTimeout(animateLoader, 300);
+  }
 });
