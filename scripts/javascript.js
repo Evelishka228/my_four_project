@@ -939,14 +939,81 @@ document.addEventListener("DOMContentLoaded", function () {
     ".detail-description"
   );
 
+  const translations = {
+    rus: {
+      about: "О НАС",
+      events: "СОБЫТИЯ",
+      merch: "МЕРЧ",
+      faq: "КОНТАКТЫ",
+      book: "Путеводитель",
+      stickers: "Стикерпак",
+      notebook: "Блокнот",
+      tape: "Лента",
+      keychain: "Брелок",
+      tshirt: "Футболка",
+      honey: "Мёд",
+      snack: "Перекус",
+      button: "EN",
+    },
+    eng: {
+      about: "ABOUT US",
+      events: "EVENTS",
+      merch: "MERCH",
+      faq: "CONTACTS",
+      book: "Guidebook",
+      stickers: "Sticker pack",
+      notebook: "Notebook",
+      tape: "Tape",
+      keychain: "Keychain",
+      tshirt: "T-shirt",
+      honey: "Honey",
+      snack: "Snack",
+      button: "RUS",
+    },
+  };
+
+  let currentLanguage = "rus";
+
+  function updateMerchItemDisplay(item, language) {
+    const nameElement = item.querySelector(".merch-name");
+    if (nameElement) {
+      const key = nameElement.getAttribute("data-i18n");
+      if (key && translations[language][key]) {
+        nameElement.textContent = translations[language][key];
+      } else if (language === "eng") {
+        nameElement.textContent =
+          item.getAttribute("data-name-en") || nameElement.textContent;
+      } else {
+        nameElement.textContent =
+          item.getAttribute("data-name-ru") || nameElement.textContent;
+      }
+    }
+  }
+
+  function updateActiveMerchDescription() {
+    if (merchDetailView.classList.contains("active")) {
+      const activeItem = document.querySelector(".merch-item:hover");
+      if (activeItem) {
+        const description =
+          currentLanguage === "eng"
+            ? activeItem.getAttribute("data-description-en")
+            : activeItem.getAttribute("data-description-ru");
+        detailDescription.innerHTML = description || "";
+      }
+    }
+  }
+
   merchItems.forEach((item) => {
     item.addEventListener("click", function () {
       const imgSrc = this.getAttribute("data-img");
-      const description = this.getAttribute("data-description");
+      const description =
+        currentLanguage === "eng"
+          ? this.getAttribute("data-description-en")
+          : this.getAttribute("data-description-ru");
 
       detailImage.src = `./img/${imgSrc}`;
       detailImage.alt = "";
-      detailDescription.innerHTML = description; // Изменено с textContent на innerHTML
+      detailDescription.innerHTML = description;
 
       merchDetailView.classList.add("active");
     });
@@ -956,5 +1023,37 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.target === this) {
       this.classList.remove("active");
     }
+  });
+
+  // Обработчик переключения языка
+  const languageToggle = document.getElementById("languageToggle");
+  if (languageToggle) {
+    languageToggle.addEventListener("click", function () {
+      currentLanguage = currentLanguage === "rus" ? "eng" : "rus";
+
+      // Обновляем названия товаров
+      merchItems.forEach((item) => {
+        updateMerchItemDisplay(item, currentLanguage);
+      });
+
+      // Обновляем открытый товар (если есть)
+      updateActiveMerchDescription();
+
+      // Обновляем текст кнопки
+      this.textContent = translations[currentLanguage].button;
+
+      // Обновляем другие элементы страницы
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[currentLanguage][key]) {
+          el.textContent = translations[currentLanguage][key];
+        }
+      });
+    });
+  }
+
+  // Инициализация при загрузке
+  merchItems.forEach((item) => {
+    updateMerchItemDisplay(item, currentLanguage);
   });
 });
