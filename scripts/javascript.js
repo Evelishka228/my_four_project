@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Объявляем переменные для изображений
+  const hoverImage1 = document.getElementById("hoverImage1");
+  const hoverImage2 = document.getElementById("hoverImage2");
+  const hoverImage3 = document.getElementById("hoverImage3");
+  const hoverImage4 = document.getElementById("hoverImage4");
+
   // Добавляем шрифты в CSS
   const fontStyles = `
     @font-face {
@@ -283,8 +289,8 @@ document.addEventListener("DOMContentLoaded", function () {
         eng: "JANUARY, 2025",
       },
       description: {
-        rus: "«Учимся у природы»: интерактивный мастер-класс по созданию съедобных сот с элементами биологии и кулинарии",
-        eng: "«Learning from nature»: interactive master class on creating edible honeycombs with elements of biology and cooking",
+        rus: "«Научимся у природы»: интерактивный мастер-класс по созданию съедобных сот",
+        eng: "«Learning from nature»: interactive master class on creating edible honeycombs",
       },
       posters: [
         "./img/poster4:1.svg",
@@ -298,8 +304,8 @@ document.addEventListener("DOMContentLoaded", function () {
         eng: "JANUARY, 2025",
       },
       description: {
-        rus: "«Учимся у природы»: интерактивный мастер-класс по созданию съедобных сот с элементами биологии и кулинарии",
-        eng: "«Learning from nature»: interactive master class on creating edible honeycombs with elements of biology and cooking",
+        rus: "«Научимся у природы»: интерактивный мастер-класс по созданию съедобных сот",
+        eng: "«Learning from nature»: interactive master class on creating edible honeycombs",
       },
       posters: [
         "./img/poster4:2.svg",
@@ -313,8 +319,8 @@ document.addEventListener("DOMContentLoaded", function () {
         eng: "JANUARY, 2025",
       },
       description: {
-        rus: "«Учимся у природы»: интерактивный мастер-класс по созданию съедобных сот с элементами биологии и кулинарии",
-        eng: "«Learning from nature»: interactive master class on creating edible honeycombs with elements of biology and cooking",
+        rus: "«Научимся у природы»: интерактивный мастер-класс по созданию съедобных сот",
+        eng: "«Learning from nature»: interactive master class on creating edible honeycombs",
       },
       posters: [
         "./img/poster4:3.svg",
@@ -381,10 +387,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const finalBee = document.querySelector(".final-bee");
   const finalText = document.querySelector(".final-text");
   const textLines = document.querySelectorAll(".text-line");
-  const hoverImage1 = document.getElementById("hoverImage1");
-  const hoverImage2 = document.getElementById("hoverImage2");
-  const hoverImage3 = document.getElementById("hoverImage3");
-  const hoverImage4 = document.getElementById("hoverImage4");
   const eventsLink = document.querySelector('.nav-link[data-i18n="events"]');
 
   // Элементы для всплывающей плашки
@@ -394,6 +396,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const eventPosters = document.getElementById("eventPosters");
   const closeDetail = document.getElementById("closeDetail");
   let currentEventData = null;
+
+  // Добавляем обработчик для ссылки "Контакты"
+  const contactsLink = document.querySelector('.nav-link[data-i18n="faq"]');
+  if (contactsLink) {
+    contactsLink.addEventListener("click", function (e) {
+      // Проверяем, не нажата ли уже активная ссылка
+      if (!this.classList.contains("active")) {
+        e.preventDefault();
+        window.location.href = "contacts.html";
+      }
+    });
+  }
 
   function updateEventDetail(event) {
     if (!eventTitle || !eventDescription || !eventPosters) return;
@@ -673,44 +687,62 @@ document.addEventListener("DOMContentLoaded", function () {
             span.style.margin = "0 40px";
             span.style.position = "relative";
             span.style.top = "0.1em";
+          });
 
-            // В функции updatePageContent замените обработчики событий для span на следующие:
+          // Обновите обработчики внутри цикла spans:
+          spans.forEach((span) => {
             span.addEventListener("mouseenter", (e) => {
               const word = span.dataset.word;
               const rect = span.getBoundingClientRect();
-              let hoverImage = null;
 
-              // Определяем какое изображение показывать
-              if (word === "МАСШТАБНО" || word === "SCALED")
-                hoverImage = hoverImage1;
-              else if (word === "КРЕАТИВНО" || word === "CREATIVE")
-                hoverImage = hoverImage2;
-              else if (word === "ТЕХНОЛОГИЧНО" || word === "TECHNOLOGICAL")
-                hoverImage = hoverImage3;
-              else if (word === "ИННОВАЦИОННО" || word === "INNOVATIVE")
-                hoverImage = hoverImage4;
+              // Сначала скрываем все изображения
+              document
+                .querySelectorAll(".hover-image-container")
+                .forEach((c) => {
+                  c.style.opacity = "0";
+                  c.style.zIndex = "0";
+                });
 
-              if (hoverImage && hoverImage.parentElement) {
-                const container = hoverImage.parentElement;
-                // Позиционируем изображение за словом
-                container.style.left = `${rect.left + rect.width / 2}px`;
-                container.style.top = `${rect.top + rect.height / 2}px`;
-                container.style.width = `${rect.width * 1.5}px`; // Делаем немного шире слова
-                container.style.height = `${rect.height * 1.5}px`; // Делаем немного выше слова
-                container.style.opacity = "1";
-                container.style.zIndex = "-1"; // Гарантируем что под текстом
+              // Выбираем нужное изображение
+              let container = null;
+              if (word === "МАСШТАБНО" || word === "SCALED") {
+                container = hoverImage1.parentElement;
+              } else if (word === "КРЕАТИВНО" || word === "CREATIVE") {
+                container = hoverImage2.parentElement;
+              } else if (word === "ТЕХНОЛОГИЧНО" || word === "TECHNOLOGICAL") {
+                container = hoverImage3.parentElement;
+              } else if (word === "ИННОВАЦИОННО" || word === "INNOVATIVE") {
+                container = hoverImage4.parentElement;
               }
 
+              if (container) {
+                // Позиционируем контейнер
+                container.style.left = `${
+                  rect.left + window.scrollX + rect.width / 2
+                }px`;
+                container.style.top = `${
+                  rect.top + window.scrollY + rect.height / 2
+                }px`;
+                container.style.width = `${rect.width * 1.5}px`;
+                container.style.height = `${rect.height * 1.5}px`;
+                container.style.opacity = "1";
+                container.style.zIndex = "999"; // показываем поверх текста
+              }
+
+              // Делаете слово прозрачным с обводкой
               span.style.color = "transparent";
               span.style.webkitTextStroke = "1.2px #fff";
             });
 
             span.addEventListener("mouseleave", () => {
+              // Скрываем все изображения
               document
                 .querySelectorAll(".hover-image-container")
-                .forEach((container) => {
-                  container.style.opacity = "0";
+                .forEach((c) => {
+                  c.style.opacity = "0";
+                  c.style.zIndex = "0";
                 });
+              // Восстанавливаем стиль слова
               span.style.color = "";
               span.style.webkitTextStroke = "";
             });

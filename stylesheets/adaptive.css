@@ -43,3 +43,33 @@
     width: 60vw;
   }
 }
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .contacts-info {
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px 20px;
+  }
+
+  .contacts-column {
+    max-width: 100%;
+  }
+
+  .contacts-column p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .contacts-spacer {
+    margin-top: 30px;
+  }
+}
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .contacts-footer {
+    padding-left: 20px;
+    font-size: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
