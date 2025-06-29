@@ -73,3 +73,37 @@
     padding-bottom: 15px;
   }
 }
+@media (max-width: 768px) {
+  .merch-page {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .merch-list,
+  .merch-detail-view {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #333;
+  }
+
+  .detail-content {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .detail-image {
+    max-width: 40%;
+    max-height: 200px;
+  }
+}
+/* Для узких экранов можно добавить адаптивность */
+@media (max-width: 768px) {
+  .merch-info {
+    font-size: 16px;
+  }
+
+  .merch-name,
+  .merch-price {
+    max-width: 40%; /* Уменьшаем максимальную ширину на мобильных */
+  }
+}

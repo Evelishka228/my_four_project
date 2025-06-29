@@ -805,3 +805,322 @@ body.detail-open::after {
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 10;
 }
+/* Стили для страницы мерча */
+.merch-page {
+  display: flex;
+  height: calc(100vh - 100px);
+  margin-top: 100px;
+}
+
+/* Левая часть - список товаров */
+.merch-list {
+  width: 50%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  overflow-y: auto;
+}
+
+/* Правая часть - детали товара */
+.merch-detail-view {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  border-left: 1px solid #333;
+}
+
+/* Стили для товара в списке */
+.merch-item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.merch-item:hover {
+  transform: translateY(-5px);
+}
+
+.merch-item img {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.merch-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+}
+
+.merch-price {
+  font-weight: bold;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+}
+
+/* Стили для детального просмотра */
+.detail-image {
+  max-width: 80%;
+  max-height: 60vh;
+  object-fit: contain;
+  margin-bottom: 30px;
+}
+
+.detail-description {
+  text-align: center;
+  max-width: 80%;
+  line-height: 1.6;
+}
+
+/* Состояние по умолчанию для детального просмотра */
+.merch-detail-view .default-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: "Inter", sans-serif;
+}
+
+.merch-detail-view .item-state {
+  display: none;
+  font-family: "Inter", sans-serif;
+  margin-top: -35%;
+}
+
+/* Состояние при выборе товара */
+.merch-detail-view.active .default-state {
+  display: none;
+  font-family: "Inter", sans-serif;
+}
+
+.merch-detail-view.active .item-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: "Inter", sans-serif;
+}
+/* Обновленные стили для детального просмотра */
+.merch-detail-view {
+  width: 50%;
+  padding: 40px;
+  border-left: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 30px;
+}
+
+.detail-image {
+  max-width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+  align-self: center;
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-description {
+  text-align: left;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.add-to-cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  align-self: flex-start;
+}
+
+.add-to-cart:hover {
+  background-color: #333;
+}
+
+.add-to-cart svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Стили для страницы мерча */
+.merch-page {
+  display: flex;
+  height: calc(100vh - 100px);
+  margin-top: 100px;
+}
+
+/* Левая часть - список товаров */
+.merch-column {
+  display: flex;
+  flex-direction: column;
+  gap: 40px; /* Увеличиваем расстояние между товарами в колонке */
+}
+.merch-list {
+  width: 50%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px; /* Расстояние между колонками */
+  overflow-y: auto;
+}
+
+/* Правая часть - детали товара */
+.merch-detail-view {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  border-left: 1px solid #333;
+}
+
+/* Стили для товара в списке */
+.merch-item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Расстояние между изображением и блоком с информацией */
+}
+.merch-item:hover {
+  transform: translateY(-5px);
+}
+
+.merch-item img {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
+  margin-bottom: 0; /* Убираем нижний отступ, так как gap теперь управляет расстоянием */
+}
+
+.merch-info {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  margin-top: 0; /* Убираем верхний отступ, так как gap управляет расстоянием */
+  padding: 0 10px; /* Добавляем небольшой отступ по бокам для текста */
+}
+
+.merch-price {
+  font-weight: bold;
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+}
+
+/* Стили для детального просмотра */
+.detail-image {
+  max-width: 80%;
+  max-height: 60vh;
+  object-fit: contain;
+  margin-bottom: 30px;
+}
+
+.detail-description {
+  text-align: center;
+  max-width: 80%;
+  line-height: 1.6;
+}
+
+/* Состояние по умолчанию для детального просмотра */
+.merch-detail-view .default-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: "Inter", sans-serif;
+}
+
+.merch-detail-view .item-state {
+  display: none;
+  font-family: "Inter", sans-serif;
+  margin-top: -35%;
+}
+
+/* Состояние при выборе товара */
+.merch-detail-view.active .default-state {
+  display: none;
+  font-family: "Inter", sans-serif;
+}
+
+.merch-detail-view.active .item-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: "Inter", sans-serif;
+}
+/* Обновленные стили для детального просмотра */
+.merch-detail-view {
+  width: 50%;
+  padding: 40px;
+  border-left: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 30px;
+}
+
+.detail-image {
+  max-width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+  align-self: center;
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-description {
+  text-align: center; /* Центрируем текст */
+  max-width: 80%; /* Ограничиваем ширину */
+  line-height: 1.6;
+  margin: 0 auto; /* Автоматические отступы по бокам для центрирования блока */
+}
+.detail-description a.view-link {
+  text-decoration: underline;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.detail-description a.view-link:hover {
+  color: #666;
+}

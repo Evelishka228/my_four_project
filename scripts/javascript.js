@@ -7,24 +7,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Добавляем шрифты в CSS
   const fontStyles = `
-    @font-face {
-      font-family: "BebasNeueRegular";
-      src: url("./fonts/BebasNeue-Regular.otf") format("opentype");
-      font-weight: normal;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: "BebasNeueBold";
-      src: url("./fonts/BebasNeue-Bold.otf") format("opentype");
-      font-weight: bold;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: "Inter";
-      src: url("./fonts/Inter-Regular.otf") format("opentype");
-      font-weight: normal;
-      font-style: normal;
-    }
+ @font-face {
+    font-family: "Inter";
+    src: url("./fonts/inter-8.woff") format("woff");
+  }
+  @font-face {
+    font-family: "BebasNeue";
+    src: url("./fonts/bebas_neue_bold.woff") format("woff");
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: "BebasNeue";
+    src: url("./fonts/bebas_neue_book.woff") format("woff");
+    font-weight: 350;
+  }
+  @font-face {
+    font-family: "BebasNeueCyrillic";
+    src: url("./fonts/BebasNeueCyrillic.woff") format("woff");
+  }
     
     .hover-image-container {
       position: absolute;
@@ -866,6 +866,14 @@ document.addEventListener("DOMContentLoaded", function () {
         langSwitcher.style.transform = "translateY(0)";
       }
     }
+    // Обработка перехода по ссылке "МЕРЧ" через JS
+    const merchLink = document.querySelector('.nav-link[data-i18n="merch"]');
+    if (merchLink) {
+      merchLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.location.href = "merch.html";
+      });
+    }
 
     updatePageContent();
     initPosters();
@@ -921,4 +929,32 @@ document.addEventListener("DOMContentLoaded", function () {
   if (preloader) {
     animateLoader();
   }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const merchItems = document.querySelectorAll(".merch-item");
+  const merchDetailView = document.getElementById("merchDetailView");
+  const detailImage = merchDetailView.querySelector(".detail-image");
+  const detailDescription = merchDetailView.querySelector(
+    ".detail-description"
+  );
+
+  merchItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      const imgSrc = this.getAttribute("data-img");
+      const description = this.getAttribute("data-description");
+
+      detailImage.src = `./img/${imgSrc}`;
+      detailImage.alt = "";
+      detailDescription.innerHTML = description; // Изменено с textContent на innerHTML
+
+      merchDetailView.classList.add("active");
+    });
+  });
+
+  merchDetailView.addEventListener("click", function (e) {
+    if (e.target === this) {
+      this.classList.remove("active");
+    }
+  });
 });
