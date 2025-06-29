@@ -29,14 +29,77 @@
 
     <main class="main-content">
       <section class="events-screen">
-        <h1 data-i18n="events">СОБЫТИЯ</h1>
-        <!-- Здесь будет контент событий -->
-        <div class="events-list">
-          <!-- Пример события -->
-          <div class="event-item">
-            <h2>Открытие нового сезона</h2>
-            <p>Дата: 15 сентября 2023</p>
+        <div class="poster-scroll-container">
+          <div class="poster-track">
+            <!-- Первый набор постеров -->
+            <div class="poster-item">
+              <img src="./img/poster1:1.svg" alt="Постер 1-1" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster1:2.svg" alt="Постер 1-2" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster1:3.svg" alt="Постер 1-3" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster2:1.svg" alt="Постер 2-1" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster2:2.svg" alt="Постер 2-2" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster2:3.svg" alt="Постер 2-3" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster3:1.svg" alt="Постер 3-1" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster3:2.svg" alt="Постер 3-2" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster3:3.svg" alt="Постер 3-3" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster4:1.svg" alt="Постер 4-1" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster4:2.svg" alt="Постер 4-2" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster4:3.svg" alt="Постер 4-3" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster5:1.svg" alt="Постер 5-1" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster5:2.svg" alt="Постер 5-2" />
+            </div>
+            <div class="poster-item">
+              <img src="./img/poster5:3.svg" alt="Постер 5-3" />
+            </div>
           </div>
+        </div>
+      </section>
+
+      <section class="event-detail" id="eventDetail">
+        <div class="event-detail-container">
+          <div class="event-info">
+            <h2 class="event-title" id="eventTitle">Название события</h2>
+            <p class="event-description" id="eventDescription">
+              Описание события будет здесь...
+            </p>
+          </div>
+          <div class="event-posters" id="eventPosters">
+            <!-- Постеры будут добавляться динамически -->
+          </div>
+          <button class="close-detail" id="closeDetail">×</button>
+        </div>
+      </section>
+
+      <!-- Добавленная email-строка (такая же как в index.html) -->
+      <section class="email-section">
+        <div class="email-container">
+          <a href="404.html">visotki@gmail.com</a>
         </div>
       </section>
     </main>

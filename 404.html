@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="HandheldFriendly" content="true" />
+    <title>404 | ВЫСОТКИ</title>
+    <link rel="icon" type="image/x-icon" href="./img/fav.png" />
+    <link href="./stylesheets/style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="error-container">
+      <div class="error-content">
+        <img src="./img/404bee.svg" alt="404" class="error-image" />
+        <div class="error-number">404</div>
+      </div>
+    </div>
+    <script>
+      document
+        .querySelector(".error-container")
+        .addEventListener("click", function () {
+          window.location.href = "index.html";
+        });
+    </script>
+  </body>
+</html>

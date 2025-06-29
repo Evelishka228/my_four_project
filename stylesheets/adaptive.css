@@ -1,0 +1,45 @@
+@media (max-width: 768px) {
+  .event-detail-container {
+    padding: 40px 20px;
+    height: auto;
+  }
+
+  .event-info,
+  .event-posters {
+    width: 100%;
+  }
+
+  .event-info {
+    padding-right: 0;
+    transform: translateY(0);
+    margin-bottom: 20px;
+  }
+
+  .event-posters {
+    flex-wrap: wrap;
+  }
+
+  .detail-poster {
+    width: calc(50% - 10px);
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .detail-poster {
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .error-text {
+    font-size: 5vw;
+  }
+
+  .error-number {
+    font-size: 40vw;
+  }
+
+  .error-image {
+    width: 60vw;
+  }
+}

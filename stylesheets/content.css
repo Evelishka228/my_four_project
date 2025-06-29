@@ -102,7 +102,9 @@ body.dark-background {
   background-color: #000;
   overflow: hidden;
   padding: 50px 0;
-  contain: strict;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  position: relative; /* Важно для позиционирования hover-изображений */
 }
 
 .text-block {
@@ -110,8 +112,12 @@ body.dark-background {
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  width: 100%;
-  overflow: hidden;
+  width: max-content;
+  min-width: 100%;
+  overflow: visible;
+  position: relative;
+  z-index: 10; /* Текст должен быть над изображением */
+  transition: all 0.3s ease;
 }
 
 .text-line {
@@ -123,11 +129,12 @@ body.dark-background {
   position: relative;
   display: flex;
   will-change: transform;
-  padding: 0 100px;
+  padding: 0;
   line-height: 1.1;
   backface-visibility: hidden;
   opacity: 0;
   transition: opacity 0.5s ease;
+  width: max-content;
 }
 
 body.loaded .text-line {
@@ -151,13 +158,13 @@ body.loaded .text-line {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(calc(-50% - 20px));
   }
 }
 
 @keyframes moveLeft {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(calc(-50% - 20px));
   }
   100% {
     transform: translateX(0);
@@ -181,7 +188,6 @@ body.loaded .text-line {
   -webkit-text-stroke: 1.2px #fff;
 }
 
-/* Остальные стили остаются без изменений */
 /* Прелоадер */
 .preloader {
   width: 100%;
@@ -338,28 +344,23 @@ body.loaded .text-line {
   transform: translateY(0);
   transition-delay: 0.9s;
 }
+
 /* Стили для изображения при наведении */
 .hover-image-container {
-  position: fixed;
-  z-index: -1;
-  pointer-events: none;
+  position: absolute;
   opacity: 0;
   transition: opacity 0.3s ease;
-  /* Убрано width: 500px; */
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5; /* Под текстом, но над фоном */
 }
+
 .hover-image {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  margin-top: -40px; /* Поднимаем изображение */
-  height: 100%;
-  width: auto;
-  max-width: none;
-  pointer-events: none; /* Чтобы не перехватывало клики */
+  object-fit: contain;
+  transition: transform 0.3s ease;
 }
-/* Добавим в конец файла style.css */
-/* Добавьте в конец файла style.css */
+
 /* Стили для страницы событий без прелоадера */
 .events-page .main-header,
 .events-page .lang-switcher {
@@ -367,53 +368,365 @@ body.loaded .text-line {
   transform: translateY(0);
 }
 
-/* Если у вас есть класс для body на странице событий */
 body.events-page {
   background-color: #000;
 }
+
+/* Основные стили контейнера */
 .events-screen {
-  padding: 100px 20px;
+  padding: 100px 0;
+  margin: 0;
+  width: 100%;
+  overflow: visible;
+}
+
+.poster-scroll-container {
+  width: 100vw;
+  overflow-x: auto;
+  overflow-y: visible;
+  position: relative;
+  margin-top: 5px;
+  padding: 45px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.poster-track {
+  display: inline-flex;
+  gap: 40px;
+  padding: 0 max(20px, calc((100vw - 1200px) / 2));
+  will-change: transform;
+  height: auto;
+  align-items: flex-start;
+}
+
+/* Стили для элементов постеров */
+.poster-item {
+  flex: 0 0 auto;
+  width: 400px;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: visible;
+  border-radius: 0;
+  transform-origin: center center;
+}
+
+.poster-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+/* Увеличение при наведении */
+.poster-item:hover {
+  transform: scale(1.25);
+  z-index: 100;
+}
+
+/* Дополнительные стили для плавности */
+.poster-item::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.poster-item:hover::before {
+  opacity: 1;
+}
+
+/* Стили для деталей события */
+.event-detail {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 70vh;
+  background-color: #000;
+  z-index: 1000;
+  transition: bottom 0.5s ease-in-out;
+  border-top: 1px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.event-detail.active {
+  bottom: 0;
+}
+
+.event-detail-container {
+  width: 90%;
   max-width: 1200px;
-  margin: 0 auto;
+  height: 80%;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  padding-top: 70px;
 }
 
-.events-screen h1 {
-  font-size: clamp(40px, 8vw, 80px);
-  font-family: "BebasNeueBold", sans-serif;
-  margin-bottom: 50px;
-  text-align: center;
-  color: #fff;
+.event-info {
+  width: 50%;
+  padding-right: 40px;
+  color: white;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  margin-top: 0;
 }
 
-.event-item {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 5px;
+.event-title {
+  font-size: 35px;
+  margin: 5px 0 20px 0;
+  font-family: "Inter", sans-serif;
+  letter-spacing: 2px;
 }
 
-.event-item h2 {
-  font-family: "BebasNeueRegular", sans-serif;
-  color: #fff;
+.event-description {
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: 80%;
+  white-space: normal;
+  word-wrap: break-word;
+  hyphens: auto;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.3s ease;
+}
+.event-description a:hover {
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+}
+/* Обновленные стили для контейнера с постерами в деталях события */
+.event-posters {
+  width: 50%;
+  display: flex;
+  gap: 20px;
+  margin-top: 0;
+}
+
+.event-posters img {
+  width: auto;
+  max-width: 30%;
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.close-detail {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Затемнение фона при открытой панели */
+body.detail-open {
+  overflow: hidden;
+}
+
+body.detail-open::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+}
+
+.detail-poster {
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-poster:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+/* Добавим в ваш CSS */
+.poster-item {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.poster-item.hover-left-1 {
+  opacity: 0.8;
+  transform: scale(0.95);
+}
+
+.poster-item.hover-left-2 {
+  opacity: 0.6;
+  transform: scale(0.9);
+}
+
+.poster-item.hover-left-3 {
+  opacity: 0.4;
+  transform: scale(0.85);
+}
+
+.poster-item.hover-right-1 {
+  opacity: 0.8;
+  transform: scale(0.95);
+}
+
+.poster-item.hover-right-2 {
+  opacity: 0.6;
+  transform: scale(0.9);
+}
+
+.poster-item.hover-right-3 {
+  opacity: 0.4;
+  transform: scale(0.85);
+}
+
+.poster-item.active-hover {
+  transform: scale(1.25);
+  z-index: 100;
+}
+.event-description.underline-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.3s ease;
+  cursor: pointer;
+  color: white;
+  font-family: '"Inter", sans-serif';
+}
+
+.event-description.underline-link:hover {
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+}
+/* Стиль для email секции */
+.email-section {
+  width: 100%;
+  padding: 40px;
+  background-color: #000;
+  position: relative;
+  z-index: 10;
+  text-align: left;
+}
+
+.email-container a {
+  font-family: "Inter", sans-serif;
   font-size: 24px;
-  margin-bottom: 10px;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.3s;
+  display: inline-block;
 }
 
-.event-item p {
-  color: #ccc;
-  font-family: sans-serif;
+.email-container a:hover {
+  opacity: 0.7;
 }
 
-.main-nav .active {
+/* Стиль для 404 страницы */
+#page404 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+#page404 div {
+  font-family: "BebasNeueBold", sans-serif;
+  font-size: 60vw;
+  color: #fff;
+  line-height: 0.8;
+}
+/* Стили для 404 страницы */
+.error-container {
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  cursor: pointer;
+  overflow: hidden;
+  animation: bgColorChange 1s infinite steps(1); /* Резкое переключение */
+}
+
+.error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  width: 100%;
+  height: 100%;
   position: relative;
 }
 
-.main-nav .active::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: white;
+.error-image {
+  width: 150vw;
+  max-width: 1200px;
+  margin-bottom: -25vw;
+  z-index: 2;
+  position: relative;
+  transform: translateY(25%);
+  margin-left: -1.7%;
+}
+
+.error-number {
+  font-size: 60vw;
+  color: #fff;
+  font-family: "BebasNeueBold", sans-serif;
+  line-height: 0.7;
+  z-index: 1;
+  position: relative;
+  margin-bottom: -5vw;
+  transform: translateY(-8%);
+  animation: textColorChange 1s infinite steps(1); /* Резкое переключение */
+}
+
+/* Анимация фона (чёрный ↔ жёлтый) */
+@keyframes bgColorChange {
+  0%,
+  50% {
+    background-color: #000; /* Чёрный */
+  }
+  50.01%,
+  100% {
+    background-color: #fff700; /* Жёлтый */
+  }
+}
+
+/* Анимация текста (белый ↔ чёрный) */
+@keyframes textColorChange {
+  0%,
+  50% {
+    color: #fff; /* Белый */
+  }
+  50.01%,
+  100% {
+    color: #000; /* Чёрный */
+  }
 }
