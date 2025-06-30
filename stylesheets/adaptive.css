@@ -1,7 +1,106 @@
+/* Базовые адаптивные стили */
 @media (max-width: 768px) {
-  .event-detail-container {
-    padding: 40px 20px;
+  /* Изменения для мобильных устройств */
+  /* Общие стили для кнопки переключения языка */
+  .lang-switcher button {
+    font-size: clamp(16px, 2vw, 28px);
+    padding: clamp(5px, 1vw, 8px) clamp(10px, 2vw, 20px);
+  }
+
+  /* Стили для email секции */
+  .email-container a {
+    font-size: clamp(16px, 4vw, 24px); /* Увеличил коэффициент для мобильных */
+  }
+
+  @media (max-width: 768px) {
+    .email-section {
+      padding: 20px; /* Добавим отступы */
+    }
+
+    .email-container a {
+      font-size: 4.5vw; /* Чуть больше для лучшей читаемости */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .email-container a {
+      font-size: 5vw;
+    }
+  }
+  /* Уменьшаем отступы и размеры */
+  .main-header {
+    padding: 15px 0;
+  }
+
+  .logo {
+    font-size: 24px;
+    margin-left: 10px;
+  }
+
+  .main-nav {
+    gap: 10px;
+    margin-right: 10px;
+  }
+
+  .nav-link {
+    font-size: 16px;
+  }
+
+  /* Адаптируем второй экран с бегущими строками */
+  .text-line {
+    font-size: 12vw;
+    gap: 20px;
+  }
+
+  .text-line span {
+    margin: 0 10px;
+  }
+
+  /* Адаптируем email секцию */
+  .email-container a {
+    font-size: 5vw;
+  }
+
+  /* Перестраиваем навигацию для мобильных */
+  .main-nav {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+  .text-line {
+    font-size: 14vw;
+  }
+
+  /* Скрываем некоторые элементы или изменяем их расположение */
+  .lang-switcher {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .lang-switcher button {
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .poster-item {
+    width: 80vw;
     height: auto;
+  }
+
+  .poster-track {
+    gap: 20px;
+    padding: 0 5vw;
+  }
+
+  .event-detail-container {
+    flex-direction: column;
+    padding: 20px;
   }
 
   .event-info,
@@ -9,68 +108,12 @@
     width: 100%;
   }
 
-  .event-info {
-    padding-right: 0;
-    transform: translateY(0);
-    margin-bottom: 20px;
+  .event-title {
+    font-size: 8vw;
   }
 
-  .event-posters {
-    flex-wrap: wrap;
-  }
-
-  .detail-poster {
-    width: calc(50% - 10px);
-    margin-bottom: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .detail-poster {
-    width: 100%;
-  }
-}
-@media (max-width: 768px) {
-  .error-text {
-    font-size: 5vw;
-  }
-
-  .error-number {
-    font-size: 40vw;
-  }
-
-  .error-image {
-    width: 60vw;
-  }
-}
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-  .contacts-info {
-    flex-direction: column;
-    gap: 30px;
-    padding: 30px 20px;
-  }
-
-  .contacts-column {
-    max-width: 100%;
-  }
-
-  .contacts-column p {
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-
-  .contacts-spacer {
-    margin-top: 30px;
-  }
-}
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-  .contacts-footer {
-    padding-left: 20px;
-    font-size: 20px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+  .event-description {
+    font-size: 4vw;
   }
 }
 @media (max-width: 768px) {
@@ -79,31 +122,261 @@
     height: auto;
   }
 
-  .merch-list,
+  .merch-list {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
   .merch-detail-view {
     width: 100%;
     border-left: none;
     border-top: 1px solid #333;
+    padding: 20px;
   }
 
-  .detail-content {
-    flex-direction: row;
-    align-items: center;
+  .merch-item img {
+    max-height: 30vh;
   }
 
   .detail-image {
-    max-width: 40%;
-    max-height: 200px;
+    max-height: 40vh;
   }
 }
-/* Для узких экранов можно добавить адаптивность */
 @media (max-width: 768px) {
-  .merch-info {
-    font-size: 16px;
+  .contacts-info {
+    flex-direction: column;
+    gap: 5vh;
+    padding: 5vh 5vw;
   }
 
-  .merch-name,
-  .merch-price {
-    max-width: 40%; /* Уменьшаем максимальную ширину на мобильных */
+  .contacts-column {
+    width: 100%;
+  }
+
+  .contacts-column p {
+    font-size: 4vw;
+  }
+
+  .contacts-footer {
+    font-size: 5vw;
+    padding: 2vh 5vw;
+  }
+}
+@media (max-width: 768px) {
+  .scale-screen-content,
+  .creative-screen-content,
+  .third-screen-content {
+    padding: 0 5vw;
+  }
+
+  .description {
+    font-size: 4vw;
+    margin: 5vh 0;
+  }
+
+  .images-row,
+  .creative-images-row {
+    flex-direction: column;
+    gap: 5vh;
+  }
+
+  .small-image,
+  .large-image,
+  .small-creative-image {
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .poster-scroll-container {
+    padding: 20px 0;
+  }
+
+  .poster-track {
+    gap: 15px;
+    padding: 0 20px;
+  }
+
+  .poster-item {
+    width: 70vw;
+    height: auto;
+    min-width: 70vw;
+  }
+
+  .poster-item:hover {
+    transform: scale(1.1);
+  }
+
+  .event-detail {
+    height: 80vh;
+  }
+
+  .event-detail-container {
+    flex-direction: column;
+    padding: 20px;
+    height: 90%;
+  }
+
+  .event-info {
+    width: 100%;
+    padding-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .event-posters {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .event-posters img {
+    max-width: 45%;
+    margin: 0 2.5% 10px;
+  }
+
+  .close-detail {
+    top: 10px;
+    right: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .merch-page {
+    flex-direction: column-reverse;
+    height: auto;
+    margin-top: 80px;
+  }
+
+  .merch-list {
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    order: 2;
+  }
+
+  .merch-detail-view {
+    width: 100%;
+    border-left: none;
+    border-bottom: 1px solid #333;
+    padding: 20px;
+    order: 1;
+    position: sticky;
+    top: 80px;
+    background: #000;
+    z-index: 50;
+  }
+
+  .merch-item {
+    margin-bottom: 20px;
+  }
+
+  .merch-item img {
+    max-height: 25vh;
+  }
+
+  /* Стили для выбранного товара */
+  .merch-detail-view.active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .merch-detail-view.active .item-state {
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .detail-image {
+    max-height: 50vh;
+  }
+
+  .close-detail-merch {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+}
+@media (max-width: 768px) {
+  .contacts-info {
+    gap: 3vh;
+    padding: 3vh 5vw;
+  }
+
+  .contacts-column p {
+    font-size: 3.5vw;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+
+  .contacts-spacer {
+    margin-top: 20px;
+  }
+
+  .contacts-footer {
+    font-size: 4vw;
+    padding: 2vh 5vw;
+  }
+}
+/* Оптимизация для мобильных устройств */
+@media (hover: none) {
+  .text-line span:hover {
+    color: #fff;
+    -webkit-text-stroke: 1.2px transparent;
+  }
+
+  .merch-item:hover,
+  .poster-item:hover {
+    transform: none;
+  }
+}
+/* Адаптивные стили (перенесены ТОЛЬКО в медиа-запросы) */
+@media (max-width: 1200px) {
+  .bee-container,
+  .final-bee-container {
+    width: 60vmin;
+    height: 60vmin;
+    max-width: 826px;
+    max-height: 826px;
+  }
+
+  .final-text {
+    font-size: 20vmin;
+  }
+}
+
+@media (max-width: 768px) {
+  .bee-container,
+  .final-bee-container {
+    width: 70vmin;
+    height: 70vmin;
+  }
+
+  .final-text {
+    font-size: 18vmin;
+  }
+}
+
+@media (max-width: 480px) {
+  .bee-container,
+  .final-bee-container {
+    width: 80vmin;
+    height: 80vmin;
+  }
+
+  .final-text {
+    font-size: 16vmin;
   }
 }

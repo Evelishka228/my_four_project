@@ -1216,3 +1216,41 @@ document.addEventListener("DOMContentLoaded", function () {
     updateMerchItemDisplay(item, currentLanguage);
   });
 });
+
+// Для merch.html
+if (document.querySelector(".merch-page")) {
+  const merchItems = document.querySelectorAll(".merch-item");
+  const merchDetailView = document.getElementById("merchDetailView");
+  const closeDetailBtn = document.querySelector(".close-detail-merch");
+
+  merchItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      if (window.innerWidth <= 768) {
+        const imgSrc = this.querySelector("img").src;
+        const imgAlt = this.querySelector("img").alt;
+        const description = this.getAttribute("data-description-ru"); // или data-description-en
+
+        merchDetailView.querySelector(".detail-image").src = imgSrc;
+        merchDetailView.querySelector(".detail-image").alt = imgAlt;
+        merchDetailView.querySelector(".detail-description").innerHTML =
+          description;
+
+        merchDetailView.classList.add("active");
+        document.body.classList.add("no-scroll");
+      }
+    });
+  });
+
+  closeDetailBtn.addEventListener("click", function () {
+    merchDetailView.classList.remove("active");
+    document.body.classList.remove("no-scroll");
+  });
+
+  // Закрытие по клику вне области
+  merchDetailView.addEventListener("click", function (e) {
+    if (e.target === this) {
+      this.classList.remove("active");
+      document.body.classList.remove("no-scroll");
+    }
+  });
+}
