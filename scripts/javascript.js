@@ -7,24 +7,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Добавляем шрифты в CSS
   const fontStyles = `
- @font-face {
-    font-family: "Inter";
-    src: url("./fonts/inter-8.woff") format("woff");
-  }
-  @font-face {
-    font-family: "BebasNeue";
-    src: url("./fonts/bebas_neue_bold.woff") format("woff");
-    font-weight: 700;
-  }
-  @font-face {
-    font-family: "BebasNeue";
-    src: url("./fonts/bebas_neue_book.woff") format("woff");
-    font-weight: 350;
-  }
-  @font-face {
-    font-family: "BebasNeueCyrillic";
-    src: url("./fonts/BebasNeueCyrillic.woff") format("woff");
-  }
+    @font-face {
+      font-family: "Inter";
+      src: url("./fonts/inter-8.woff") format("woff");
+    }
+    @font-face {
+      font-family: "BebasNeue";
+      src: url("./fonts/bebas_neue_bold.woff") format("woff");
+      font-weight: 700;
+    }
+    @font-face {
+      font-family: "BebasNeue";
+      src: url("./fonts/bebas_neue_book.woff") format("woff");
+      font-weight: 350;
+    }
+    @font-face {
+      font-family: "BebasNeueCyrillic";
+      src: url("./fonts/BebasNeueCyrillic.woff") format("woff");
+    }
     
     .hover-image-container {
       position: absolute;
@@ -99,6 +99,69 @@ document.addEventListener("DOMContentLoaded", function () {
     .event-description a:hover {
       text-decoration-color: rgba(255, 255, 255, 0.5);
     }
+
+    /* Общие стили для всех экранов */
+    .content-screen {
+      background-color: #000;
+      padding: 50px 0;
+      position: relative;
+      z-index: 5;
+      display: none;
+    }
+
+    .screen-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .full-width-image {
+      width: 100%;
+      margin: 30px 0;
+      display: block;
+    }
+
+    .screen-description {
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      text-align: left;
+      margin: 20px 0 40px;
+      font-size: 18px;
+      line-height: 1.5;
+      max-width: 800px;
+    }
+
+    .close-screen-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 40px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .close-screen-btn:hover {
+      opacity: 0.7;
+    }
+
+    /* Анимация появления */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content-screen {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
   `;
 
   const styleElement = document.createElement("style");
@@ -124,6 +187,21 @@ document.addEventListener("DOMContentLoaded", function () {
       merch: "МЕРЧ",
       faq: "КОНТАКТЫ",
       eventsTitle: "СОБЫТИЯ",
+      scaleScreen: {
+        title1: "Место для встреч и отдыха",
+        description1:
+          "Главная входная комната встречает гостей теплым золотистым светом, исходящим от огромного светящегося шара мёда, подвешенного к высокому потолку...",
+      },
+      creativeScreen: {
+        title1: "Место для релаксации и наблюдения",
+        description1:
+          "Медовая комната поражает воображение: по прозрачным трубам, оплетающим стены, непрерывно течет густой золотистый мед, сверкая в свете теплых ламп. Воздух насыщен сладким, терпким ароматом свежего нектара, смешанным с легкими нотами прополиса и воска. Гул работающего производства создает убаюкивающий фон, а струйки янтарного лакомства, стекающие по стеклянным желобам, напоминают реки из сказочного мира.",
+      },
+      techScreen: {
+        title1: "Место для деловых встреч",
+        description1:
+          "В центре помещения извивается широкая лестница со ступенями, излучающими теплое сияние, словно сотканное из застывшего солнечного света. Вдоль стен расставлены элегантные кресла и низкие столики из белого материала где гости могут провести деловые переговоры в атмосфере утонченного комфорта. Приглушенный свет сферических ламп и звук передвижения мёда с верхнего этажа добавляют пространству камерности, будто здесь время течет медленнее. Этот зал — идеальное сочетание футуристичной эстетики и функциональности, где каждая деталь продумана для вдохновения и продуктивности.",
+      },
     },
     eng: {
       stages: [
@@ -143,6 +221,21 @@ document.addEventListener("DOMContentLoaded", function () {
       merch: "MERCH",
       faq: "CONTACTS",
       eventsTitle: "EVENTS",
+      scaleScreen: {
+        title1: "Meeting and relaxation space",
+        description1:
+          "The main entrance room greets guests with warm golden light emanating from a huge glowing honey ball suspended from the high ceiling...",
+      },
+      creativeScreen: {
+        title1: "Space for relaxation and observation",
+        description1:
+          "The Honey Room is breathtaking: thick golden honey flows continuously through transparent tubes that wrap around the walls, sparkling in the light of warm lamps. The air is saturated with the sweet, tart aroma of fresh nectar, mixed with light notes of propolis and wax. The hum of the working production creates a lulling background, and the streams of amber delicacy flowing down the glass chutes resemble rivers from a fairy-tale world.",
+      },
+      techScreen: {
+        title1: "Space for business meetings",
+        description1:
+          "In the center of the room winds a wide staircase with steps emitting a warm glow, as if woven from frozen sunlight. Elegant chairs and low tables made of white material are arranged along the walls where guests can conduct business negotiations in an atmosphere of refined comfort. The muted light of spherical lamps and the sound of honey moving from the upper floor add intimacy to the space, as if time flows slower here. This hall is the perfect combination of futuristic aesthetics and functionality, where every detail is designed for inspiration and productivity.",
+      },
     },
   };
 
@@ -401,7 +494,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const contactsLink = document.querySelector('.nav-link[data-i18n="faq"]');
   if (contactsLink) {
     contactsLink.addEventListener("click", function (e) {
-      // Проверяем, не нажата ли уже активная ссылка
       if (!this.classList.contains("active")) {
         e.preventDefault();
         window.location.href = "contacts.html";
@@ -413,11 +505,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!eventTitle || !eventDescription || !eventPosters) return;
 
     eventTitle.textContent = event.title[currentLanguage];
-
-    // Очищаем содержимое
     eventDescription.innerHTML = "";
 
-    // Проверяем, нужно ли сделать описание ссылкой
     const isAnnualRecruitmentPoster = event.posters.some(
       (poster) =>
         poster.includes("poster1:1.svg") ||
@@ -425,7 +514,6 @@ document.addEventListener("DOMContentLoaded", function () {
         poster.includes("poster1:3.svg")
     );
 
-    // Проверяем, нужно ли добавить подчеркивание и ссылку для инновационного воркшопа
     const isInnovativeWorkshopPoster = event.posters.some(
       (poster) =>
         poster.includes("poster5:1.svg") ||
@@ -434,7 +522,6 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
     if (isAnnualRecruitmentPoster) {
-      // Создаем ссылку для ежегодного набора
       const link = document.createElement("a");
       link.href = "https://evelishka228.github.io/my_third_project/";
       link.target = "_blank";
@@ -448,7 +535,6 @@ document.addEventListener("DOMContentLoaded", function () {
       link.style.transition = "text-decoration-color 0.3s ease";
       eventDescription.appendChild(link);
     } else if (isInnovativeWorkshopPoster) {
-      // Создаем ссылку для инновационного воркшопа
       const link = document.createElement("a");
       link.href = "https://evelishka228.github.io/my_second_project/";
       link.target = "_blank";
@@ -462,13 +548,11 @@ document.addEventListener("DOMContentLoaded", function () {
       link.style.transition = "text-decoration-color 0.3s ease";
       eventDescription.appendChild(link);
     } else {
-      // Обычный текст для остальных событий
       eventDescription.textContent = event.description[currentLanguage];
       eventDescription.style.fontFamily = '"Inter", sans-serif';
       eventDescription.style.textDecoration = "none";
     }
 
-    // Остальной код функции остается без изменений
     eventPosters.innerHTML = "";
 
     const sortedPosters = [...event.posters].sort((a, b) => {
@@ -509,7 +593,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     currentEventData = event;
 
-    // Создаем копию события с правильно отсортированными постерами
     const sortedEvent = {
       ...event,
       posters: [...event.posters].sort((a, b) => {
@@ -534,7 +617,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const img = poster.querySelector("img");
       if (!img) return;
 
-      // Улучшенное извлечение ID постера
       const getPosterId = (altText) => {
         const match = altText.match(/(\d+)[:\-](\d+)/);
         if (match) {
@@ -545,24 +627,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
       img.addEventListener("click", function () {
         const posterId = getPosterId(this.alt);
-        console.log("Clicked poster ID:", posterId);
-
         if (posterId && eventsData[posterId]) {
           showEventDetail(eventsData[posterId]);
-        } else {
-          console.warn(
-            "No data for poster:",
-            this.alt,
-            "Extracted ID:",
-            posterId
-          );
-          console.log("Available poster IDs:", Object.keys(eventsData));
         }
       });
 
-      // Эффекты при наведении
       poster.addEventListener("mouseenter", () => {
-        // Удаляем все классы hover у всех постеров
         posterItems.forEach((item) => {
           item.classList.remove(
             "active-hover",
@@ -575,10 +645,8 @@ document.addEventListener("DOMContentLoaded", function () {
           );
         });
 
-        // Добавляем класс активному постеру
         poster.classList.add("active-hover");
 
-        // Обрабатываем постеры слева
         let prev = poster.previousElementSibling;
         let distance = 1;
         while (prev && distance <= 3) {
@@ -587,7 +655,6 @@ document.addEventListener("DOMContentLoaded", function () {
           distance++;
         }
 
-        // Обрабатываем постеры справа
         let next = poster.nextElementSibling;
         distance = 1;
         while (next && distance <= 3) {
@@ -598,7 +665,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       poster.addEventListener("mouseleave", () => {
-        // Удаляем все классы hover при уходе курсора
         posterItems.forEach((item) => {
           item.classList.remove(
             "active-hover",
@@ -660,6 +726,11 @@ document.addEventListener("DOMContentLoaded", function () {
       eventsTitle.textContent = translations[currentLanguage].eventsTitle;
     }
 
+    // Обновляем тексты в экранах
+    updateScreenContent("scaleScreen");
+    updateScreenContent("creativeScreen");
+    updateScreenContent("techScreen");
+
     if (
       eventDetail &&
       eventDetail.classList.contains("active") &&
@@ -673,7 +744,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (textLines[index]) {
           const words = text.split(" ");
           const duplicatedWords = [];
-          // Увеличиваем количество повторений для более плавной анимации
           for (let i = 0; i < 20; i++) {
             duplicatedWords.push(...words);
           }
@@ -687,77 +757,143 @@ document.addEventListener("DOMContentLoaded", function () {
             span.style.margin = "0 40px";
             span.style.position = "relative";
             span.style.top = "0.1em";
-          });
 
-          // Обновите обработчики внутри цикла spans:
-          spans.forEach((span) => {
             span.addEventListener("mouseenter", (e) => {
               const word = span.dataset.word;
               const rect = span.getBoundingClientRect();
 
-              // Сначала скрываем все изображения
               document
                 .querySelectorAll(".hover-image-container")
                 .forEach((c) => {
                   c.style.opacity = "0";
-                  c.style.zIndex = "0";
                 });
 
-              // Выбираем нужное изображение
-              let container = null;
-              if (word === "МАСШТАБНО" || word === "SCALED") {
-                container = hoverImage1.parentElement;
-              } else if (word === "КРЕАТИВНО" || word === "CREATIVE") {
-                container = hoverImage2.parentElement;
-              } else if (word === "ТЕХНОЛОГИЧНО" || word === "TECHNOLOGICAL") {
-                container = hoverImage3.parentElement;
-              } else if (word === "ИННОВАЦИОННО" || word === "INNOVATIVE") {
-                container = hoverImage4.parentElement;
-              }
+              let imageContainer = null;
+              if (word === "НАДЁЖНО" || word === "RELIABLE")
+                imageContainer = document.querySelector(
+                  '[data-image="hover1"]'
+                );
+              else if (word === "КРЕАТИВНО" || word === "CREATIVE")
+                imageContainer = document.querySelector(
+                  '[data-image="hover2"]'
+                );
+              else if (word === "ТЕХНОЛОГИЧНО" || word === "TECHNOLOGICAL")
+                imageContainer = document.querySelector(
+                  '[data-image="hover3"]'
+                );
+              else if (word === "ИННОВАЦИОННО" || word === "INNOVATIVE")
+                imageContainer = document.querySelector(
+                  '[data-image="hover4"]'
+                );
+              else if (word === "МАСШТАБНО" || word === "SCALED")
+                imageContainer = document.querySelector(
+                  '[data-image="hover1"]'
+                );
+              else if (word === "БЕЗОПАСНО" || word === "CONFIDENTIAL")
+                imageContainer = document.querySelector(
+                  '[data-image="hover4"]'
+                );
 
-              if (container) {
-                // Позиционируем контейнер
-                container.style.left = `${
-                  rect.left + window.scrollX + rect.width / 2
+              if (imageContainer) {
+                imageContainer.style.left = `${rect.left + rect.width / 2}px`;
+                imageContainer.style.top = `${
+                  rect.top + rect.height + 20 + window.scrollY
                 }px`;
-                container.style.top = `${
-                  rect.top + window.scrollY + rect.height / 2
-                }px`;
-                container.style.width = `${rect.width * 1.5}px`;
-                container.style.height = `${rect.height * 1.5}px`;
-                container.style.opacity = "1";
-                container.style.zIndex = "999"; // показываем поверх текста
-              }
+                imageContainer.style.opacity = "1";
 
-              // Делаете слово прозрачным с обводкой
-              span.style.color = "transparent";
-              span.style.webkitTextStroke = "1.2px #fff";
+                span.style.color = "transparent";
+                span.style.webkitTextStroke = "1.2px #fff";
+              }
             });
 
             span.addEventListener("mouseleave", () => {
-              // Скрываем все изображения
               document
                 .querySelectorAll(".hover-image-container")
                 .forEach((c) => {
                   c.style.opacity = "0";
-                  c.style.zIndex = "0";
                 });
-              // Восстанавливаем стиль слова
               span.style.color = "";
               span.style.webkitTextStroke = "";
             });
+
+            span.addEventListener("click", function (e) {
+              const word = span.dataset.word;
+
+              // Определяем какой экран показывать/скрывать
+              let screenToToggle = null;
+              if (word === "МАСШТАБНО" || word === "SCALED") {
+                screenToToggle = document.getElementById("scaleScreen");
+              } else if (word === "КРЕАТИВНО" || word === "CREATIVE") {
+                screenToToggle = document.getElementById("creativeScreen");
+              } else if (word === "ТЕХНОЛОГИЧНО" || word === "TECHNOLOGICAL") {
+                screenToToggle = document.getElementById("techScreen");
+              }
+
+              if (screenToToggle) {
+                e.preventDefault();
+
+                // Проверяем, открыт ли уже экран
+                if (screenToToggle.style.display === "block") {
+                  // Если экран открыт - закрываем его
+                  screenToToggle.style.display = "none";
+                } else {
+                  // Сначала скрываем все экраны
+                  document
+                    .querySelectorAll(".content-screen")
+                    .forEach((screen) => {
+                      screen.style.display = "none";
+                    });
+
+                  // Показываем нужный экран
+                  screenToToggle.style.display = "block";
+
+                  // Обновляем контент экрана перед показом
+                  updateScreenContent(screenToToggle.id);
+
+                  // Прокручиваем к экрану
+                  screenToToggle.scrollIntoView({ behavior: "smooth" });
+
+                  // Добавляем экран перед email-секцией
+                  const emailSection = document.querySelector(".email-section");
+                  if (
+                    emailSection &&
+                    screenToToggle.parentNode !== emailSection.parentNode
+                  ) {
+                    emailSection.parentNode.insertBefore(
+                      screenToToggle,
+                      emailSection
+                    );
+                  }
+                }
+              }
+            });
           });
+
+          setTimeout(() => {
+            document.querySelectorAll(".text-line").forEach((line, i) => {
+              line.style.animation = `${
+                i % 2 === 0 ? "moveRight" : "moveLeft"
+              } 100s linear infinite`;
+            });
+          }, 50);
         }
       });
+    }
+  }
 
-      setTimeout(() => {
-        document.querySelectorAll(".text-line").forEach((line, i) => {
-          // Увеличиваем длительность анимации для более плавного движения
-          line.style.animation = `${
-            i % 2 === 0 ? "moveRight" : "moveLeft"
-          } 100s linear infinite`;
-        });
-      }, 50);
+  // Новая функция для обновления контента экранов
+  function updateScreenContent(screenType) {
+    const screen = document.getElementById(screenType);
+    if (!screen) return;
+
+    const descriptions = screen.querySelectorAll(
+      ".description, .creative-description"
+    );
+    if (descriptions.length >= 2) {
+      descriptions[0].textContent =
+        translations[currentLanguage][screenType].title1;
+      descriptions[1].textContent =
+        translations[currentLanguage][screenType].description1;
     }
   }
 
@@ -811,7 +947,37 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Создаем 404 страницу
+  // Обработчик закрытия всех экранов
+  document.querySelectorAll(".close-screen-btn").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      this.closest(".content-screen").style.display = "none";
+    });
+  });
+
+  // Добавим обработчики для закрытия экранов при клике на пространство
+  document
+    .querySelectorAll(
+      ".screen.scale-screen, .screen.creative-screen, .screen.third-screen"
+    )
+    .forEach((screen) => {
+      screen.addEventListener("click", function (e) {
+        if (e.target === this) {
+          this.style.display = "none";
+        }
+      });
+    });
+
+  // Также добавим обработчики для кнопок закрытия
+  document
+    .querySelectorAll(
+      ".close-scale-screen, .close-creative-screen, .close-third-screen"
+    )
+    .forEach((btn) => {
+      btn.addEventListener("click", function () {
+        this.closest(".screen").style.display = "none";
+      });
+    });
+
   function show404Page() {
     const page404 = document.createElement("div");
     page404.id = "page404";
@@ -836,7 +1002,6 @@ document.addEventListener("DOMContentLoaded", function () {
     page404.appendChild(number404);
     document.body.appendChild(page404);
 
-    // Закрытие по клику
     page404.addEventListener("click", function () {
       document.body.removeChild(page404);
     });
@@ -866,7 +1031,7 @@ document.addEventListener("DOMContentLoaded", function () {
         langSwitcher.style.transform = "translateY(0)";
       }
     }
-    // Обработка перехода по ссылке "МЕРЧ" через JS
+
     const merchLink = document.querySelector('.nav-link[data-i18n="merch"]');
     if (merchLink) {
       merchLink.addEventListener("click", function (e) {
@@ -1025,24 +1190,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Обработчик переключения языка
   const languageToggle = document.getElementById("languageToggle");
   if (languageToggle) {
     languageToggle.addEventListener("click", function () {
       currentLanguage = currentLanguage === "rus" ? "eng" : "rus";
 
-      // Обновляем названия товаров
       merchItems.forEach((item) => {
         updateMerchItemDisplay(item, currentLanguage);
       });
 
-      // Обновляем открытый товар (если есть)
       updateActiveMerchDescription();
 
-      // Обновляем текст кнопки
       this.textContent = translations[currentLanguage].button;
 
-      // Обновляем другие элементы страницы
       document.querySelectorAll("[data-i18n]").forEach((el) => {
         const key = el.getAttribute("data-i18n");
         if (translations[currentLanguage][key]) {
@@ -1052,7 +1212,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Инициализация при загрузке
   merchItems.forEach((item) => {
     updateMerchItemDisplay(item, currentLanguage);
   });

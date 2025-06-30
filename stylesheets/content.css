@@ -105,6 +105,7 @@ body.dark-background {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   position: relative; /* Важно для позиционирования hover-изображений */
+  z-index: 10; /* Добавьте это */
 }
 
 .text-block {
@@ -177,15 +178,19 @@ body.loaded .text-line {
   color: #fff;
   -webkit-text-stroke: 1.2px transparent;
   paint-order: stroke;
-  transition: all 0.3s ease;
-  position: relative;
   top: 0.1em;
   cursor: default;
+  position: relative;
+  z-index: 10; /* Текст должен быть выше изображений */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 100; /* слова выше изображений */
 }
 
 .text-line span:hover {
   color: transparent;
+  transition: all 0.3s ease;
   -webkit-text-stroke: 1.2px #fff;
+  z-index: 100; /* слова выше изображений */
 }
 
 /* Прелоадер */
@@ -254,7 +259,7 @@ body.loaded .text-line {
   left: 0;
   width: 100%;
   padding: 25px 0;
-  z-index: 9998;
+  z-index: 100;
   opacity: 0;
   transform: translateY(-20px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
@@ -347,24 +352,28 @@ body.loaded .text-line {
 
 /* Стили для изображения при наведении */
 .hover-image-container {
-  position: absolute;
+  position: fixed;
+  width: 50px; /* Фиксированный размер вместо vw */
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   opacity: 0;
-  transition: opacity 0.3s ease, z-index 0.3s ease;
+  transition: opacity 0.3s ease;
   pointer-events: none;
-  overflow: visible;
-  z-index: 999; /* очень высокий, чтобы показывать поверх текста */
+  padding: 15px;
+  box-sizing: border-box;
+  transform: translate(-50%, 0);
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
+  z-index: 5; /* ниже чем слова, чтобы слова были сверху */
 }
 
-/* Стиль для изображений внутри контейнера */
 .hover-image {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: auto;
-  height: 150%;
-  max-width: none;
-  pointer-events: none; /* чтобы не мешать hover */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 /* Стили для страницы событий без прелоадера */
 .events-page .main-header,
@@ -628,9 +637,11 @@ body.detail-open::after {
   width: 100%;
   padding: 40px;
   background-color: #000;
-  position: relative;
-  z-index: 10;
   text-align: left;
+  position: relative;
+  z-index: 1; /* Понижаем z-index */
+  position: relative;
+  margin-top: 100px;
 }
 
 .email-container a {
@@ -1123,4 +1134,215 @@ body.detail-open::after {
 
 .detail-description a.view-link:hover {
   color: #666;
+}
+/* Обновленные стили для третьего экрана */
+.third-screen {
+  background-color: #000;
+  padding: 0;
+  position: relative;
+  z-index: 5;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.third-screen-content {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.full-width-image {
+  width: 100vw;
+  margin: 0;
+  display: block;
+  margin-left: calc(-50vw + 50%);
+}
+
+.description {
+  font-family: "Inter", sans-serif;
+  color: #fff;
+  text-align: left;
+  margin: 40px 20px;
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.images-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 40px auto;
+  gap: 20px;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+.small-image {
+  width: 40%;
+}
+
+.large-image {
+  width: 55%;
+}
+/* Дополнительные стили для кнопки закрытия */
+.close-third-screen {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.close-third-screen:hover {
+  opacity: 0.7;
+}
+/* Стили для креативного экрана */
+.creative-screen {
+  background-color: #000;
+  padding: 50px 0;
+  position: relative;
+  z-index: 5;
+}
+
+.creative-screen-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.creative-description {
+  font-family: "Inter", sans-serif;
+  color: #fff;
+  text-align: left;
+  margin: 20px 0;
+  font-size: 18px;
+  line-height: 1.5;
+  max-width: 800px;
+  white-space: normal; /* Разрешаем переносы */
+  word-wrap: break-word; /* Перенос длинных слов */
+}
+.creative-description p {
+  white-space: pre-line; /* Учитывает переносы строк и <br> */
+  margin-bottom: 1em; /* Добавляет отступ между абзацами */
+}
+.creative-images-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+  gap: 20px;
+}
+
+.small-creative-image {
+  width: 30%;
+  flex-grow: 1;
+}
+
+.close-creative-screen {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.close-creative-screen:hover {
+  opacity: 0.7;
+}
+/* Стили для экрана МАСШТАБНО */
+.scale-screen,
+.creative-screen,
+.third-screen {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.scale-screen[style*="display: none"],
+.creative-screen[style*="display: none"],
+.third-screen[style*="display: none"] {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.scale-screen[style*="display: block"],
+.creative-screen[style*="display: block"],
+.third-screen[style*="display: block"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+.scale-screen {
+  background-color: #000;
+  padding: 0;
+  position: relative;
+  z-index: 5;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.scale-screen-content {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.close-scale-screen {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.close-scale-screen:hover {
+  opacity: 0.7;
+}
+
+/* Добавим в CSS */
+.screen.scale-screen,
+.screen.creative-screen,
+.screen.third-screen {
+  cursor: default;
+}
+
+.screen.scale-screen > *,
+.screen.creative-screen > *,
+.screen.third-screen > * {
+  cursor: auto;
+}
+
+.content-screen {
+  height: 100vh;
+  overflow-y: auto;
+}
+.screen-content {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.scale-screen,
+.creative-screen,
+.third-screen {
+  position: relative;
+  display: none;
+  width: 100%;
+  padding: 20px 0;
+  background-color: #000;
+  z-index: 100;
+}
+
+/* Запрещаем скролл тела при открытой плашке */
+body.screen-open {
+  overflow: hidden;
 }

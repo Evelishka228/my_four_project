@@ -39,8 +39,40 @@
     <!-- Стили и скрипты -->
     <link href="./stylesheets/style.css" rel="stylesheet" type="text/css" />
     <script src="./scripts/javascript.js" defer></script>
+
+    <style>
+      /* Временные стили для hover-изображений */
+      .hover-image-container {
+        position: fixed;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 1000;
+        pointer-events: none;
+        width: 30vw;
+        height: 30vw;
+        max-width: 400px;
+        max-height: 400px;
+        transform: translate(-50%, -50%);
+      }
+
+      .hover-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .second-screen {
+        position: relative;
+        z-index: 10;
+      }
+
+      .email-section {
+        position: relative;
+        z-index: 1;
+      }
+    </style>
   </head>
-  <!-- Остальное содержимое -->
+
   <body>
     <div class="preloader">
       <div
@@ -68,7 +100,7 @@
     </header>
 
     <main class="main-content">
-      <!-- Первый экран (дублирует финальное состояние прелоадера) -->
+      <!-- Первый экран -->
       <section class="screen first-screen" id="firstScreen">
         <div class="final-content-wrapper">
           <div class="final-text-container">
@@ -80,7 +112,7 @@
         </div>
       </section>
 
-      <!-- Второй экран с тремя строками текста -->
+      <!-- Второй экран -->
       <section class="screen second-screen">
         <div class="text-block">
           <div class="text-line">
@@ -108,45 +140,134 @@
             <span>БЕЗОПАСНО</span>
           </div>
         </div>
-        <div class="hover-image-container">
-          <img
-            src="./img/hover1.svg"
-            alt="Hover image"
-            class="hover-image"
-            id="hoverImage1"
-          />
-        </div>
-        <div class="hover-image-container">
-          <img
-            src="./img/hover2.svg"
-            alt="Hover image"
-            class="hover-image"
-            id="hoverImage2"
-          />
-        </div>
-        <div class="hover-image-container">
-          <img
-            src="./img/hover3.svg"
-            alt="Hover image"
-            class="hover-image"
-            id="hoverImage3"
-          />
-        </div>
-        <div class="hover-image-container">
-          <img
-            src="./img/hover4.svg"
-            alt="Hover image"
-            class="hover-image"
-            id="hoverImage4"
-          />
-        </div>
-      </section>
-      <!-- Удалите старую секцию email и оставьте только эту перед </main> -->
-      <section class="email-section">
-        <div class="email-container">
-          <a href="404.html">visotki@gmail.com</a>
-        </div>
       </section>
     </main>
+
+    <!-- Hover-изображения (вынесены за пределы main) -->
+    <div class="hover-image-container" data-image="hover1">
+      <img src="./img/hover1.svg" alt="Hover image" class="hover-image" />
+    </div>
+    <div class="hover-image-container" data-image="hover2">
+      <img src="./img/hover2.svg" alt="Hover image" class="hover-image" />
+    </div>
+    <div class="hover-image-container" data-image="hover3">
+      <img src="./img/hover3.svg" alt="Hover image" class="hover-image" />
+    </div>
+
+    <!-- Третий экран (будет появляться при клике на МАСШТАБНО) -->
+    <!-- Третий экран (будет появляться при клике на МАСШТАБНО) -->
+    <section class="screen scale-screen" id="scaleScreen" style="display: none">
+      <div class="scale-screen-content">
+        <img
+          src="./img/main1:1.svg"
+          alt="Изображение 1"
+          class="full-width-image"
+        />
+        <p class="description">Место для встреч и отдыха</p>
+        <img
+          src="./img/main1:2.svg"
+          alt="Изображение 2"
+          class="full-width-image"
+        />
+        <p class="description">
+          Главная входная комната встречает гостей теплым золотистым светом,
+          исходящим от огромного светящегося шара мёда, подвешенного к высокому
+          потолку...
+        </p>
+        <div class="images-row">
+          <img
+            src="./img/main1:3.svg"
+            alt="Изображение 3"
+            class="small-image"
+          />
+          <img
+            src="./img/main1:4.svg"
+            alt="Изображение 4"
+            class="large-image"
+          />
+        </div>
+      </div>
+    </section>
+    <!-- Экран для КРЕАТИВНО -->
+    <section
+      class="screen creative-screen"
+      id="creativeScreen"
+      style="display: none"
+    >
+      <div class="third-screen-content">
+        <img
+          src="./img/main2:1.svg"
+          alt="Креативное пространство"
+          class="full-width-image"
+        />
+        <p class="description">Место для релаксации и наблюдения</p>
+        <img
+          src="./img/main2:2.svg"
+          alt="Медовая комната"
+          class="full-width-image"
+        />
+        <p class="description">
+          Медовая комната поражает воображение: по прозрачным трубам, оплетающим
+          стены, непрерывно течет густой золотистый мед, сверкая в свете теплых
+          ламп. Воздух насыщен сладким, терпким ароматом свежего нектара,
+          смешанным с легкими нотами прополиса и воска. Гул работающего
+          производства создает убаюкивающий фон, а струйки янтарного лакомства,
+          стекающие <br />
+          по стеклянным желобам, напоминают реки из сказочного мира.
+        </p>
+        <div class="creative-images-row">
+          <img
+            src="./img/main2:3.svg"
+            alt="Деталь 1"
+            class="small-creative-image"
+          />
+          <img
+            src="./img/main2:4.svg"
+            alt="Деталь 2"
+            class="small-creative-image"
+          />
+          <img
+            src="./img/main2:5.svg"
+            alt="Деталь 3"
+            class="small-creative-image"
+          />
+        </div>
+      </div>
+    </section>
+    <!-- Email-секция -->
+    <section class="email-section">
+      <div class="email-container">
+        <a href="404.html">visotki@gmail.com</a>
+      </div>
+    </section>
+    <!-- Третий экран для ТЕХНОЛОГИЧНО -->
+    <section class="screen third-screen" id="techScreen" style="display: none">
+      <div class="third-screen-content">
+        <img
+          src="./img/main3:1.svg"
+          alt="Технологичное пространство"
+          class="full-width-image"
+        />
+        <p class="description">Место для деловых встреч</p>
+        <img src="./img/main3:2.svg" alt="Лестница" class="full-width-image" />
+        <p class="description">
+          В центре помещения извивается широкая лестница со ступенями,
+          излучающими теплое сияние, словно сотканное из застывшего солнечного
+          света. Вдоль стен расставлены элегантные кресла и низкие столики из
+          белого материала где гости могут провести деловые переговоры в
+          атмосфере утонченного комфорта. Приглушенный свет сферических ламп и
+          звук передвижения мёда <br />
+          с верхнего этажа добавляют пространству камерности, будто здесь время
+          течет медленнее. Этот зал — идеальное сочетание футуристичной эстетики
+          и функциональности, где каждая деталь продумана для вдохновения и
+          продуктивности.
+        </p>
+        <img
+          src="./img/main3:3.svg"
+          alt="Технологии"
+          class="full-width-image"
+        />
+      </div>
+    </section>
   </body>
 </html>
